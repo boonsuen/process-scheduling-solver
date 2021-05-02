@@ -38,5 +38,4 @@ module.exports = {
 
     return config;
   },
-  basePath: isProd ? '/process-scheduling-solver' : ''
 };

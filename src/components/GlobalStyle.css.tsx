@@ -24,6 +24,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     padding: 0;
     margin: 0;
+    background-color: #FAFAFA;
     font-family: "Inter", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, sans-serif;
     font-size: 1rem;
     -webkit-font-smoothing: antialiased;

@@ -19,7 +19,7 @@ const StyledTable = styled.table`
   td {
     text-align: left;
     padding: 15px;
-    border: 1px solid var(--color-table-border);
+    border: 1px solid #727abb;
     line-height: 16.1px;
   }
 `;
@@ -37,44 +37,53 @@ type TableProps = {
 };
 
 const Table = ({ arrivalTime, burstTime }: TableProps) => {
-  const processesInfo = arrivalTime.map((item, index) => {
-    return {
-      job: (index+10).toString(36).toUpperCase(),
-      at: parseInt(item), 
-      bt: parseInt(burstTime[index])
-    };
-  }).sort((obj1, obj2) => {
-    if (obj1.at > obj2.at) {
+  const processesInfo = arrivalTime
+    .map((item, index) => {
+      return {
+        job: (index + 10).toString(36).toUpperCase(),
+        at: parseInt(item),
+        bt: parseInt(burstTime[index]),
+      };
+    })
+    .sort((obj1, obj2) => {
+      if (obj1.at > obj2.at) {
         return 1;
-    }
-    if (obj1.at < obj2.at) {
+      }
+      if (obj1.at < obj2.at) {
         return -1;
-    }
-    return 0;
-  });
+      }
+      return 0;
+    });
 
-  let finishTime: number;
+  let finishTime: number[] = [];
   const solvedProcessesInfo = processesInfo.map((process, index) => {
     if (index === 0) {
-      finishTime = process.at + process.bt;
+      finishTime[index] = process.at + process.bt;
+    } else if (process.at > finishTime[index - 1]) {
+      finishTime[index] = process.at + process.bt;
     } else {
-      finishTime += process.bt;
+      finishTime[index] = finishTime[index - 1] + process.bt;
     }
     return {
       ...process,
-      ft: finishTime,
-      tat: finishTime - process.at,
-      wat: finishTime - process.at - process.bt
-    }
+      ft: finishTime[index],
+      tat: finishTime[index] - process.at,
+      wat: finishTime[index] - process.at - process.bt,
+    };
   });
 
-  const averageTAT = solvedProcessesInfo.reduce((acc, val) => {
-    return acc + val.tat;
-  }, 0) / solvedProcessesInfo.length;
+  const total = (array: number[]) =>
+    array.reduce((a, b) => a + b)
 
-  const averageWAT = solvedProcessesInfo.reduce((acc, val) => {
-    return acc + val.wat;
-  }, 0) / solvedProcessesInfo.length;
+  const numberOfProcesses = solvedProcessesInfo.length;
+  const turnaoundTime = solvedProcessesInfo.map(process => process.tat);
+  const waitingTime = solvedProcessesInfo.map(process => process.wat);
+
+  const totalTAT = total(turnaoundTime);
+  const averageTAT = totalTAT / numberOfProcesses;
+
+  const totalWAT = total(waitingTime);
+  const averageWAT = totalWAT / numberOfProcesses;
 
   if (!arrivalTime.length || !burstTime.length) {
     return null;
@@ -105,9 +114,15 @@ const Table = ({ arrivalTime, burstTime }: TableProps) => {
         ))}
         {
           <tr>
-            <td colSpan={4} style={{ textAlign: 'right' }}>Average</td>
-            <td>{averageTAT ? averageTAT : null}</td>
-            <td>{averageWAT ? averageWAT : null}</td>
+            <td colSpan={4} style={{ textAlign: 'right' }}>
+              Average
+            </td>
+            <td>
+              {totalTAT} / {numberOfProcesses} = {averageTAT}
+            </td>
+            <td>
+              {totalWAT} / {numberOfProcesses} = {averageWAT}
+            </td>
           </tr>
         }
       </tbody>

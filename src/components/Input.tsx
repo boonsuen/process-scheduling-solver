@@ -24,11 +24,21 @@ const Form = styled.form`
 
   label {
     display: block;
+    font-size: 14px;
+    margin-bottom: 8px;
   }
 
   input {
     width: 100%;
-    height: 2.5rem;
+    border: 1px solid #C5C7D0;
+    border-radius: 5px;
+    padding: 11px 12px;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: #005BFF;
+      outline: none;
+    }
   }
 
   button {
