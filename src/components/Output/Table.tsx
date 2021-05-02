@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 const StyledTable = styled.table`
   box-shadow: 0 2px 27px 7px rgba(3, 169, 245, 0.13);
-  width: 80%;
-  max-width: 720px;
+  width: 100%;
+  max-width: 1000px;
   margin: 40px auto;
   border-collapse: collapse;
   border-radius: 10px;
@@ -30,6 +30,11 @@ const HeaderCell = styled.th`
   height: 40px;
   white-space: nowrap;
 `;
+
+const precisionRound = (number: number, precision: number) => {
+  const factor = Math.pow(10, precision);
+  return Math.round(number * factor) / factor;
+};
 
 type TableProps = {
   arrivalTime: string[];
@@ -73,21 +78,17 @@ const Table = ({ arrivalTime, burstTime }: TableProps) => {
   });
 
   const total = (array: number[]) =>
-    array.reduce((acc, currentValue) => acc + currentValue, 0); 
+    array.reduce((acc, currentValue) => acc + currentValue, 0);
 
   const numberOfProcesses = solvedProcessesInfo.length;
-  const turnaoundTime = solvedProcessesInfo.map(process => process.tat);
-  const waitingTime = solvedProcessesInfo.map(process => process.wat);
+  const turnaoundTime = solvedProcessesInfo.map((process) => process.tat);
+  const waitingTime = solvedProcessesInfo.map((process) => process.wat);
 
   const totalTAT = total(turnaoundTime);
   const averageTAT = totalTAT / numberOfProcesses;
 
   const totalWAT = total(waitingTime);
   const averageWAT = totalWAT / numberOfProcesses;
-
-  if (!arrivalTime.length || !burstTime.length) {
-    return null;
-  }
 
   return (
     <StyledTable>
@@ -118,10 +119,10 @@ const Table = ({ arrivalTime, burstTime }: TableProps) => {
               Average
             </td>
             <td>
-              {totalTAT} / {numberOfProcesses} = {averageTAT}
+              {totalTAT} / {numberOfProcesses} = {precisionRound(averageTAT, 3)}
             </td>
             <td>
-              {totalWAT} / {numberOfProcesses} = {averageWAT}
+              {totalWAT} / {numberOfProcesses} = {precisionRound(averageWAT, 3)}
             </td>
           </tr>
         }

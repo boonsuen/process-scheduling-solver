@@ -17,11 +17,16 @@ type OutputProps = {
 };
 
 const Output = ({ arrivalTime, burstTime }: OutputProps) => {
+  console.log(arrivalTime);
+  console.log(burstTime);
   return (
     <StyledOutput>
       <h1>Output</h1>
-      Gantt chart and table will be shown here
-      <Table {...{ arrivalTime, burstTime }} />
+      {!arrivalTime.length || !burstTime.length ? (
+        'Gantt chart and table will be shown here'
+      ) : (
+        <Table {...{ arrivalTime, burstTime }} />
+      )}
     </StyledOutput>
   );
 };

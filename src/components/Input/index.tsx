@@ -1,5 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from 'react';
 import styled from 'styled-components';
+import AlgoSelect from './AlgoSelect';
 
 const StyledInput = styled.div`
   padding: 1rem 2rem 2rem 2rem;
@@ -23,9 +24,9 @@ const Form = styled.form`
   }
 
   label {
-    display: block;
+    display: inline-block;
     font-size: 14px;
-    margin-bottom: 8px;
+    padding-bottom: 8px;
   }
 
   input {
@@ -34,10 +35,16 @@ const Form = styled.form`
     border-radius: 5px;
     padding: 11px 12px;
     transition: border-color 0.2s;
+    font-size: 14px;
 
     &:focus {
       border-color: #005BFF;
       outline: none;
+    }
+
+    &:-webkit-autofill::first-line {
+      font-family: $body-font;
+      font-size: 14px;
     }
   }
 
@@ -51,8 +58,8 @@ const Form = styled.form`
 `;
 
 type InputProps = {
-  setArrivalTime?: Dispatch<SetStateAction<string[]>>;
-  setBurstTime?: Dispatch<SetStateAction<string[]>>;
+  setArrivalTime: Dispatch<SetStateAction<string[]>>;
+  setBurstTime: Dispatch<SetStateAction<string[]>>;
 }
 
 const Input = (props: InputProps) => {
@@ -83,10 +90,10 @@ const Input = (props: InputProps) => {
     <StyledInput>
       <h1>Input</h1>
       <Form onSubmit={handleSubmit}>
-        <div>
-          <div>Algorithm:</div>
-          <div>First Come First Serve</div>
-        </div>
+        <fieldset>
+          <label htmlFor="react-select-algo">Algorithm</label>
+          <AlgoSelect />
+        </fieldset>
         <fieldset>
           <label htmlFor="arrival-time">Arrival Time</label>
           <input
