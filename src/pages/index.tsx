@@ -11,8 +11,10 @@ const Main = styled.main`
 `;
 
 const Footer = styled.footer`
+  padding: 20px 0 40px 0;
+
   a {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     transition: color 0.3s;
 

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+import GanttChart from './GanttChart';
 import Table from './Table';
+import { solveFCFS } from './utils/fcfs';
 
 const StyledOutput = styled.div`
   padding: 1rem 2rem 2rem 2rem;
@@ -17,15 +19,18 @@ type OutputProps = {
 };
 
 const Output = ({ arrivalTime, burstTime }: OutputProps) => {
-  console.log(arrivalTime);
-  console.log(burstTime);
+  const { solvedProcessesInfo, ganttChartInfo } = solveFCFS(arrivalTime, burstTime);
+  
   return (
     <StyledOutput>
       <h1>Output</h1>
       {!arrivalTime.length || !burstTime.length ? (
         'Gantt chart and table will be shown here'
       ) : (
-        <Table {...{ arrivalTime, burstTime }} />
+        <>
+          <GanttChart {...{ ganttChartInfo }} />
+          <Table {...{ solvedProcessesInfo }} />
+        </>
       )}
     </StyledOutput>
   );

@@ -70,10 +70,14 @@ const Input = (props: InputProps) => {
     e.preventDefault();
 
     const arrivalTimeArr = arrivalTime.trim().split(/\s+/);
-    props.setArrivalTime(arrivalTimeArr)
+    props.setArrivalTime(arrivalTimeArr);
 
     const burstTimeArr = burstTime.trim().split(/\s+/);
-    props.setBurstTime(burstTimeArr)
+    if (burstTimeArr.includes("0")) {
+      alert("0 burst time is invalid")
+      return;
+    }
+    props.setBurstTime(burstTimeArr);
   };
 
   const handleArrivalTimeChange = (
@@ -109,7 +113,7 @@ const Input = (props: InputProps) => {
             onChange={handleBurstTimeChange}
             type="text"
             id="burst-time"
-            placeholder="e.g. 0 2 4 6 8"
+            placeholder="e.g. 2 4 6 8 10"
           />
         </fieldset>
         <button type="submit">Solve</button>

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const StyledTable = styled.table`
-  box-shadow: 0 2px 27px 7px rgba(3, 169, 245, 0.13);
   width: 100%;
   max-width: 1000px;
-  margin: 40px auto;
+  margin: 0px auto 20px auto;
   border-collapse: collapse;
   border-radius: 10px;
   box-sizing: border-box;
@@ -19,7 +18,7 @@ const StyledTable = styled.table`
   td {
     text-align: left;
     padding: 15px;
-    border: 1px solid #727abb;
+    border: 1px solid #e1e1e1;
     line-height: 16.1px;
   }
 `;
@@ -29,6 +28,8 @@ const HeaderCell = styled.th`
   font-weight: 500;
   height: 40px;
   white-space: nowrap;
+  color: #6d7187;
+  background-color: #f9f9fb;
 `;
 
 const precisionRound = (number: number, precision: number) => {
@@ -37,46 +38,17 @@ const precisionRound = (number: number, precision: number) => {
 };
 
 type TableProps = {
-  arrivalTime: string[];
-  burstTime: string[];
+  solvedProcessesInfo: {
+    job: string;
+    at: number;
+    bt: number;
+    ft: number;
+    tat: number;
+    wat: number;
+  }[];
 };
 
-const Table = ({ arrivalTime, burstTime }: TableProps) => {
-  const processesInfo = arrivalTime
-    .map((item, index) => {
-      return {
-        job: (index + 10).toString(36).toUpperCase(),
-        at: parseInt(item),
-        bt: parseInt(burstTime[index]),
-      };
-    })
-    .sort((obj1, obj2) => {
-      if (obj1.at > obj2.at) {
-        return 1;
-      }
-      if (obj1.at < obj2.at) {
-        return -1;
-      }
-      return 0;
-    });
-
-  let finishTime: number[] = [];
-  const solvedProcessesInfo = processesInfo.map((process, index) => {
-    if (index === 0) {
-      finishTime[index] = process.at + process.bt;
-    } else if (process.at > finishTime[index - 1]) {
-      finishTime[index] = process.at + process.bt;
-    } else {
-      finishTime[index] = finishTime[index - 1] + process.bt;
-    }
-    return {
-      ...process,
-      ft: finishTime[index],
-      tat: finishTime[index] - process.at,
-      wat: finishTime[index] - process.at - process.bt,
-    };
-  });
-
+const Table = ({ solvedProcessesInfo }: TableProps) => {
   const total = (array: number[]) =>
     array.reduce((acc, currentValue) => acc + currentValue, 0);
 

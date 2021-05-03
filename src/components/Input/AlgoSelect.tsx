@@ -2,17 +2,20 @@ import { useEffect, useState } from 'react';
 import Select from 'react-select';
 
 const options = [
-  { value: 'First Come First Serve', label: 'FCFS' }
+  {
+    value: 'FCFS',
+    label: 'First Come First Serve (FCFS)',
+  }
 ];
 
 const AlgoSelect = () => {
   const [selectedOption, setSelectedOption] = useState({
-    value: 'First Come First Serve',
-    label: 'FCFS',
+    value: 'FCFS',
+    label: 'First Come First Serve (FCFS)',
   });
 
   useEffect(() => {
-    console.log(selectedOption);
+
   }, [selectedOption]);
 
   return (
