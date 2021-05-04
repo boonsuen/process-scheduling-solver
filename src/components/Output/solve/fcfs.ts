@@ -1,10 +1,6 @@
-export type ganttChartInfoType = {
-  job: string;
-  start: number;
-  stop: number;
-}[];
+import { ganttChartInfoType } from './';
 
-export const solveFCFS = (arrivalTime: string[], burstTime: string[]) => {
+export const fcfs = (arrivalTime: string[], burstTime: string[]) => {
   const processesInfo = arrivalTime
     .map((item, index) => {
       return {
@@ -52,6 +48,8 @@ export const solveFCFS = (arrivalTime: string[], burstTime: string[]) => {
       wat: finishTime[index] - process.at - process.bt,
     };
   });
+
+  console.log('fcfs!!!')
 
   return { solvedProcessesInfo, ganttChartInfo };
 };

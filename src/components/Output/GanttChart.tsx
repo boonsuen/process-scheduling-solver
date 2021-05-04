@@ -1,4 +1,4 @@
-import { ganttChartInfoType } from './utils/fcfs';
+import { ganttChartInfoType } from './solve';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -52,7 +52,6 @@ type GanttChartProps = {
 };
 
 const GanttChart = ({ ganttChartInfo }: GanttChartProps) => {
-  // [{job, start, stop}]
   const job: string[] = [];
   const time: number[] = [];
   ganttChartInfo.forEach((item, index) => {

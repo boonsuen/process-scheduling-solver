@@ -31,14 +31,14 @@ const Form = styled.form`
 
   input {
     width: 100%;
-    border: 1px solid #C5C7D0;
+    border: 1px solid #c5c7d0;
     border-radius: 5px;
     padding: 11px 12px;
     transition: border-color 0.2s;
     font-size: 14px;
 
     &:focus {
-      border-color: #005BFF;
+      border-color: #005bff;
       outline: none;
     }
 
@@ -58,9 +58,11 @@ const Form = styled.form`
 `;
 
 type InputProps = {
+  selectedAlgo: {};
+  setSelectedAlgo: Dispatch<SetStateAction<{}>>;
   setArrivalTime: Dispatch<SetStateAction<string[]>>;
   setBurstTime: Dispatch<SetStateAction<string[]>>;
-}
+};
 
 const Input = (props: InputProps) => {
   const [arrivalTime, setArrivalTime] = useState('');
@@ -73,16 +75,14 @@ const Input = (props: InputProps) => {
     props.setArrivalTime(arrivalTimeArr);
 
     const burstTimeArr = burstTime.trim().split(/\s+/);
-    if (burstTimeArr.includes("0")) {
-      alert("0 burst time is invalid")
+    if (burstTimeArr.includes('0')) {
+      alert('0 burst time is invalid');
       return;
     }
     props.setBurstTime(burstTimeArr);
   };
 
-  const handleArrivalTimeChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleArrivalTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setArrivalTime(e.target.value);
   };
 
@@ -96,7 +96,10 @@ const Input = (props: InputProps) => {
       <Form onSubmit={handleSubmit}>
         <fieldset>
           <label htmlFor="react-select-algo">Algorithm</label>
-          <AlgoSelect />
+          <AlgoSelect
+            selectedAlgo={props.selectedAlgo}
+            setSelectedAlgo={props.setSelectedAlgo}
+          />
         </fieldset>
         <fieldset>
           <label htmlFor="arrival-time">Arrival Time</label>
