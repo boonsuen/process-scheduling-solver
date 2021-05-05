@@ -36,7 +36,7 @@ export const sjf = (arrivalTime: string[], burstTime: string[]) => {
       });
 
       processesInfo.forEach((p) => {
-        if (p.at < finishTime[0] && !readyQueue.includes(p)) {
+        if (p.at <= finishTime[0] && !readyQueue.includes(p)) {
           readyQueue.push(p);
         }
       });
@@ -113,7 +113,7 @@ export const sjf = (arrivalTime: string[], burstTime: string[]) => {
 
       processesInfo.forEach((p) => {
         if (
-          p.at < newestFinishTime &&
+          p.at <= newestFinishTime &&
           !readyQueue.includes(p) &&
           !finishedJobs.includes(p)
         ) {
