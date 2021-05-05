@@ -49,7 +49,5 @@ export const fcfs = (arrivalTime: string[], burstTime: string[]) => {
     };
   });
 
-  console.log('fcfs!!!')
-
   return { solvedProcessesInfo, ganttChartInfo };
 };

@@ -25,7 +25,7 @@ const Output = ({ algo, arrivalTime, burstTime }: OutputProps) => {
     return (
       <StyledOutput>
         <h1>Output</h1>
-        'Gantt chart and table will be shown here'
+        Gantt chart and table will be shown here
       </StyledOutput>
     );
   } else {
