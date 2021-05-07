@@ -59,24 +59,21 @@ export const sjf = (arrivalTime: string[], burstTime: string[]) => {
             return !finishedJobs.includes(p);
           })
           .sort((a, b) => {
-            if (a.bt > b.bt) {
-              return 1;
-            }
-            if (a.bt < b.bt) {
-              return -1;
-            }
+            if (a.at > b.at) return 1;
+            if (a.at < b.at) return -1;
+            if (a.bt > b.bt) return 1;
+            if (a.bt < a.bt) return -1;
             return 0;
           });
+        console.log({i, unfinishedJobs});
         readyQueue.push(unfinishedJobs[0]);
       }
 
       const rqSortedByBT = [...readyQueue].sort((a, b) => {
-        if (a.bt > b.bt) {
-          return 1;
-        }
-        if (a.bt < b.bt) {
-          return -1;
-        }
+        if (a.bt > b.bt) return 1;
+        if (a.bt < b.bt) return -1;
+        if (a.at > b.at) return 1;
+        if (a.at < b.at) return -1;
         return 0;
       });
 
