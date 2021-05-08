@@ -16,8 +16,8 @@ const StyledOutput = styled.div`
 
 type OutputProps = {
   algo: AlgoType;
-  arrivalTime: string[];
-  burstTime: string[];
+  arrivalTime: number[];
+  burstTime: number[];
 };
 
 const Output = ({ algo, arrivalTime, burstTime }: OutputProps) => {

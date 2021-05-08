@@ -1,12 +1,12 @@
 import { ganttChartInfoType } from './';
 
-export const fcfs = (arrivalTime: string[], burstTime: string[]) => {
+export const fcfs = (arrivalTime: number[], burstTime: number[]) => {
   const processesInfo = arrivalTime
     .map((item, index) => {
       return {
         job: (index + 10).toString(36).toUpperCase(),
-        at: parseInt(item),
-        bt: parseInt(burstTime[index]),
+        at: item,
+        bt: burstTime[index],
       };
     })
     .sort((obj1, obj2) => {

@@ -37,8 +37,8 @@ const Footer = styled.footer`
 
 export default function Home() {
   const [selectedAlgo, setSelectedAlgo] = useState(defaultOption);
-  const [arrivalTime, setArrivalTime] = useState<string[]>([]);
-  const [burstTime, setBurstTime] = useState([]);
+  const [arrivalTime, setArrivalTime] = useState<number[]>([]);
+  const [burstTime, setBurstTime] = useState<number[]>([]);
 
   return (
     <div>

@@ -60,8 +60,8 @@ const Form = styled.form`
 type InputProps = {
   selectedAlgo: {};
   setSelectedAlgo: Dispatch<SetStateAction<{}>>;
-  setArrivalTime: Dispatch<SetStateAction<string[]>>;
-  setBurstTime: Dispatch<SetStateAction<string[]>>;
+  setArrivalTime: Dispatch<SetStateAction<number[]>>;
+  setBurstTime: Dispatch<SetStateAction<number[]>>;
 };
 
 const Input = (props: InputProps) => {
@@ -71,14 +71,23 @@ const Input = (props: InputProps) => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const arrivalTimeArr = arrivalTime.trim().split(/\s+/);
-    props.setArrivalTime(arrivalTimeArr);
-
-    const burstTimeArr = burstTime.trim().split(/\s+/);
-    if (burstTimeArr.includes('0')) {
+    const arrivalTimeArr = arrivalTime
+      .trim()
+      .split(/\s+/)
+      .map((at) => parseInt(at));    
+    const burstTimeArr = burstTime
+      .trim()
+      .split(/\s+/)
+      .map((at) => parseInt(at));
+    if (burstTimeArr.includes(0)) {
       alert('0 burst time is invalid');
       return;
+    } else if (arrivalTimeArr.length !== burstTimeArr.length) {
+      alert('The length of the arrival times and burst times does not match.')
+      return;
     }
+
+    props.setArrivalTime(arrivalTimeArr);
     props.setBurstTime(burstTimeArr);
   };
 

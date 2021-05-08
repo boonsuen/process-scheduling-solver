@@ -1,12 +1,12 @@
 import { ganttChartInfoType } from './';
 
-export const sjf = (arrivalTime: string[], burstTime: string[]) => {
+export const sjf = (arrivalTime: number[], burstTime: number[]) => {
   const processesInfo = arrivalTime
     .map((item, index) => {
       return {
         job: (index + 10).toString(36).toUpperCase(),
-        at: parseInt(item),
-        bt: parseInt(burstTime[index]),
+        at: item,
+        bt: burstTime[index],
       };
     })
     .sort((obj1, obj2) => {
@@ -65,7 +65,6 @@ export const sjf = (arrivalTime: string[], burstTime: string[]) => {
             if (a.bt < a.bt) return -1;
             return 0;
           });
-        console.log({i, unfinishedJobs});
         readyQueue.push(unfinishedJobs[0]);
       }
 

@@ -1,7 +1,7 @@
 import React, { useEffect, Dispatch, SetStateAction } from 'react';
 import Select from 'react-select';
 
-export type AlgoType = 'FCFS' | 'SJF';
+export type AlgoType = 'FCFS' | 'SJF' | 'SRTF';
 type OptionType = {
   value: AlgoType;
   label: string;
@@ -17,6 +17,10 @@ const options: OptionType[] = [
   {
     value: 'SJF',
     label: 'Shortest Job First, SJF (non-preemptive)',
+  },
+  {
+    value: 'SRTF',
+    label: 'Shortest Remaining Time First, SRTF',
   },
 ];
 

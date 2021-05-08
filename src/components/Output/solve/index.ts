@@ -1,5 +1,6 @@
 import { fcfs } from './fcfs';
 import { sjf } from './sjf';
+import { srtf } from './srtf';
 import { AlgoType } from '../../Input/AlgoSelect';
 
 export type ganttChartInfoType = {
@@ -10,14 +11,16 @@ export type ganttChartInfoType = {
 
 export const solve = (
   algo: AlgoType,
-  arrivalTime: string[],
-  burstTime: string[]
+  arrivalTime: number[],
+  burstTime: number[]
 ) => {
   switch (algo) {
     case 'FCFS':
       return fcfs(arrivalTime, burstTime)  
     case 'SJF':
       return sjf(arrivalTime, burstTime)  
+    case 'SRTF':
+      return srtf(arrivalTime, burstTime)  
     default:
       break;
   }
