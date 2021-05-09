@@ -85,6 +85,9 @@ const Input = (props: InputProps) => {
     } else if (arrivalTimeArr.length !== burstTimeArr.length) {
       alert('The length of the arrival times and burst times does not match.')
       return;
+    } else if (arrivalTimeArr.includes(NaN) || burstTimeArr.includes(NaN)) {
+      alert('Invalid input')
+      return;
     }
 
     props.setArrivalTime(arrivalTimeArr);
