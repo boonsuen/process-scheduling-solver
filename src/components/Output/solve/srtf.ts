@@ -30,13 +30,21 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
   }, {});
 
   readyQueue.push(unfinishedJobs[0]);
-
   while (
     Object.values(remainingTime).reduce((acc: number, cur: number) => {
       return acc + cur;
     }, 0) &&
     unfinishedJobs.length > 0
   ) {
+    let prevIdle = false;
+    if (
+      readyQueue.length === 0 &&
+      unfinishedJobs.length > 0
+    ) {
+      prevIdle = true;
+      readyQueue.push(unfinishedJobs[0]);
+    }
+
     const jobToExecuteNext = Object.entries(remainingTime)
       .map((el, i) => {
         return {
@@ -62,8 +70,13 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
     const processToExecute = readyQueue.find(p => p.job === jobToExecuteNext);
 
     const processATLessThanBT = processesInfo.filter((p) => {
+      let curr: number = currentTime;
+      if (prevIdle) {
+        curr = processToExecute.at;
+      }
+
       return (
-        p.at <= remainingTime[processToExecute.job] + currentTime &&
+        p.at <= remainingTime[processToExecute.job] + curr &&
         p !== processToExecute &&
         !readyQueue.includes(p) &&
         unfinishedJobs.includes(p)
@@ -71,7 +84,7 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
     });
     let gotInterruption = false;
     processATLessThanBT.some((p) => {
-      const amount = p.at - processToExecute.at;
+      const amount = p.at - currentTime;
 
       if (currentTime >= p.at) {
         readyQueue.push(p);
@@ -80,16 +93,54 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
       if (p.bt < processToExecute.bt - amount) {
         remainingTime[processToExecute.job] -= amount;
         readyQueue.push(p);
+        const prevCurrentTime = currentTime;
         currentTime += amount;
+        ganttChartInfo.push({
+          job: processToExecute.job,
+          start: prevCurrentTime,
+          stop: currentTime
+        });
+        
         gotInterruption = true;
         return true;
       }
     });
 
     if (!gotInterruption) {
-      const remainingT = remainingTime[processToExecute.job];
-      remainingTime[processToExecute.job] -= remainingT;
-      currentTime += remainingT;
+      if (prevIdle) {
+        const remainingT = remainingTime[processToExecute.job];
+        remainingTime[processToExecute.job] -= remainingT;
+        currentTime = processToExecute.at + remainingT;
+
+        processATLessThanBT.forEach(p => {
+          if (currentTime >= p.at) {
+            readyQueue.push(p);
+          }
+        });
+
+        ganttChartInfo.push({
+          job: processToExecute.job,
+          start: processToExecute.at,
+          stop: currentTime
+        });
+      } else {
+        const remainingT = remainingTime[processToExecute.job];
+        remainingTime[processToExecute.job] -= remainingT;
+        const prevCurrentTime = currentTime;
+        currentTime += remainingT;
+
+        processATLessThanBT.forEach(p => {
+          if (currentTime >= p.at) {
+            readyQueue.push(p);
+          }
+        });
+
+        ganttChartInfo.push({
+          job: processToExecute.job,
+          start: prevCurrentTime,
+          stop: currentTime
+        });
+      }      
     }
     if (remainingTime[processToExecute.job] === 0) {
       const indexToRemoveUJ = unfinishedJobs.indexOf(processToExecute);
