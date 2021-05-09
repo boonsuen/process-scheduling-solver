@@ -38,7 +38,7 @@ module.exports = {
 
     return config;
   },
-  assetPrefix: isProd ? 'https://boonsuen.com/process-scheduling-solver' : '',
+  // assetPrefix: isProd ? 'https://boonsuen.com/process-scheduling-solver' : '',
   env: {
     ASSET_PREFIX: isProd
       ? 'https://boonsuen.com/process-scheduling-solver'
