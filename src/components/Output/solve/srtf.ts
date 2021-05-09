@@ -37,13 +37,29 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
     }, 0) &&
     unfinishedJobs.length > 0
   ) {
-    const processToExecute = readyQueue.sort((obj1, obj2) => {
-      if (obj1.bt > obj2.bt) return 1;
-      if (obj1.bt < obj2.bt) return -1;
-      if (obj1.at > obj2.at) return 1;
-      if (obj1.at < obj2.at) return -1;
-      return 0;
-    })[0];
+    const jobToExecuteNext = Object.entries(remainingTime)
+      .map((el, i) => {
+        return {
+          job: el[0],
+          at: processesInfo[i].at,
+          remainingTime: el[1],
+        };
+      })
+      .filter(
+        (p) =>
+          p.remainingTime !== 0 &&
+          readyQueue.find((process) => process.job === p.job) &&
+          unfinishedJobs.find((process) => process.job === p.job)
+      )
+      .sort((a, b) => {
+        if (a.remainingTime > b.remainingTime) return 1;
+        if (a.remainingTime < b.remainingTime) return -1;
+        if (a.at > b.at) return 1;
+        if (a.at < b.at) return -1;
+        return 0;
+      })[0].job;
+
+    const processToExecute = readyQueue.find(p => p.job === jobToExecuteNext);
 
     const processATLessThanBT = processesInfo.filter((p) => {
       return (
@@ -56,7 +72,7 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
     let gotInterruption = false;
     processATLessThanBT.some((p) => {
       const amount = p.at - processToExecute.at;
-      
+
       if (currentTime >= p.at) {
         readyQueue.push(p);
       }
@@ -71,7 +87,7 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
     });
 
     if (!gotInterruption) {
-      const remainingT = remainingTime[processToExecute.job]
+      const remainingT = remainingTime[processToExecute.job];
       remainingTime[processToExecute.job] -= remainingT;
       currentTime += remainingT;
     }
