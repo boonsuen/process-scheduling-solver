@@ -5,8 +5,8 @@ import InterVarWoff2 from '../assets/fonts/Inter.var.woff2';
 export const fontFaceRules = `
   @font-face {
     font-family: "Inter";
-    src: url("${InterVarWoff2}") format('woff2 supports variations'),
-         url("${InterVarWoff2}") format('woff2-variations');
+    src: url("${process.env.ASSET_PREFIX}${InterVarWoff2}") format('woff2 supports variations'),
+         url("${process.env.ASSET_PREFIX}${InterVarWoff2}") format('woff2-variations');
     font-weight: 100 900;
   }
 `;
