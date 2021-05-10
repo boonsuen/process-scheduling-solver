@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { useState, Dispatch, SetStateAction, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import AlgoSelect from './AlgoSelect';
 
@@ -130,6 +130,15 @@ type InputProps = {
 const Input = (props: InputProps) => {
   const [arrivalTime, setArrivalTime] = useState('');
   const [burstTime, setBurstTime] = useState('');
+  const arrivalTimeRef = useRef(null);
+  const burstTimeRef = useRef(null);
+
+  useEffect(() => {
+    if (arrivalTimeRef.current && burstTimeRef.current) {
+      arrivalTimeRef.current.value = '';
+      burstTimeRef.current.value = '';
+    }
+  }, []);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -182,6 +191,7 @@ const Input = (props: InputProps) => {
             type="text"
             id="arrival-time"
             placeholder="e.g. 0 2 4 6 8"
+            ref={arrivalTimeRef}
           />
         </fieldset>
         <fieldset>
@@ -191,6 +201,7 @@ const Input = (props: InputProps) => {
             type="text"
             id="burst-time"
             placeholder="e.g. 2 4 6 8 10"
+            ref={burstTimeRef}
           />
         </fieldset>
         <Button>Solve</Button>
