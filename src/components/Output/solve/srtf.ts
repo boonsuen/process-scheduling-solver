@@ -84,6 +84,10 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
     });
     let gotInterruption = false;
     processATLessThanBT.some((p) => {
+      if (prevIdle) {
+        currentTime = processToExecute.at;
+      }
+
       const amount = p.at - currentTime;
 
       if (currentTime >= p.at) {

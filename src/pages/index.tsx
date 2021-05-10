@@ -5,9 +5,13 @@ import Input from '../components/Input';
 import Output from '../components/Output';
 import { defaultOption } from '../components/Input/AlgoSelect';
 
+import { media } from '../components/GlobalStyle.css';
+
 const Main = styled.main`
   display: flex;
-  margin: 60px auto 1rem !important;
+  ${media['1050']`flex-direction: column`};
+  margin: 45px auto 1rem !important;
+  ${media['600']`margin: 20px auto 1rem !important`};
   gap: clamp(0.5rem, 2.5vw, 4rem);
 `;
 

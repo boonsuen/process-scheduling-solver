@@ -62,12 +62,27 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center;
     align-items: center;
   }
+  
+  @media (max-width: 1150px) {
+    h1 {
+      font-size: 28px;
+    }
+  }
+  @media (max-width: 600px) {
+    h1 {
+      font-size: 20px;
+    }
+    
+    .container {
+      width: 94%;
+    }
+  }
 `;
 
 const sizes = {
-  '800': 800,
-  '675': 675,
-  '400': 400
+  '1150': 1150,
+  '1050': 1050,
+  '600': 600
 };
 
 export const media = Object.keys(sizes).reduce((acc, label) => {
