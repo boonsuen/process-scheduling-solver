@@ -30,9 +30,10 @@ type OutputProps = {
   algo: AlgoType;
   arrivalTime: number[];
   burstTime: number[];
+  timeQuantum: number;
 };
 
-const Output = ({ algo, arrivalTime, burstTime }: OutputProps) => {
+const Output = ({ algo, arrivalTime, burstTime, timeQuantum }: OutputProps) => {
   if (!arrivalTime.length || !burstTime.length) {
     return (
       <StyledOutput>
@@ -44,7 +45,8 @@ const Output = ({ algo, arrivalTime, burstTime }: OutputProps) => {
     const { solvedProcessesInfo, ganttChartInfo } = solve(
       algo,
       arrivalTime,
-      burstTime
+      burstTime,
+      timeQuantum
     );
     return (
       <StyledOutput>

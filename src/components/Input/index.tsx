@@ -1,6 +1,12 @@
-import React, { useState, Dispatch, SetStateAction, useEffect, useRef } from 'react';
+import React, {
+  useState,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+} from 'react';
 import styled from 'styled-components';
-import AlgoSelect from './AlgoSelect';
+import AlgoSelect, { AlgoType } from './AlgoSelect';
 
 import { media } from '../GlobalStyle.css';
 
@@ -49,7 +55,7 @@ const Form = styled.form`
 
     &:focus {
       border-color: #2684ff;
-      background-color: #FFF;
+      background-color: #fff;
       outline: none;
     }
 
@@ -95,23 +101,23 @@ const Button = ({ children }) => {
   const createRipple = (event: React.MouseEvent<HTMLButtonElement>) => {
     const button = event.currentTarget;
 
-    const circle = document.createElement("span");
+    const circle = document.createElement('span');
     const diameter = Math.max(button.clientWidth, button.clientHeight);
     const radius = diameter / 2;
 
     circle.style.width = circle.style.height = `${diameter}px`;
     circle.style.left = `${event.pageX - button.offsetLeft - radius}px`;
     circle.style.top = `${event.pageY - button.offsetTop - radius}px`;
-    circle.classList.add("ripple");
-    
-    const ripple = button.getElementsByClassName("ripple")[0];
+    circle.classList.add('ripple');
+
+    const ripple = button.getElementsByClassName('ripple')[0];
 
     if (ripple) {
       ripple.remove();
     }
 
     button.appendChild(circle);
-  }
+  };
 
   return (
     <button onClick={createRipple} type="submit">
@@ -121,15 +127,20 @@ const Button = ({ children }) => {
 };
 
 type InputProps = {
-  selectedAlgo: {};
+  selectedAlgo: {
+    value: AlgoType;
+    label: string;
+  };
   setSelectedAlgo: Dispatch<SetStateAction<{}>>;
   setArrivalTime: Dispatch<SetStateAction<number[]>>;
   setBurstTime: Dispatch<SetStateAction<number[]>>;
+  setTimeQuantum: Dispatch<SetStateAction<number>>;
 };
 
 const Input = (props: InputProps) => {
   const [arrivalTime, setArrivalTime] = useState('');
   const [burstTime, setBurstTime] = useState('');
+  const [timeQuantum, setTimeQuantum] = useState('');
   const arrivalTimeRef = useRef(null);
   const burstTimeRef = useRef(null);
 
@@ -146,23 +157,38 @@ const Input = (props: InputProps) => {
     const arrivalTimeArr = arrivalTime
       .trim()
       .split(/\s+/)
-      .map((at) => parseInt(at));    
+      .map((at) => parseInt(at));
     const burstTimeArr = burstTime
       .trim()
       .split(/\s+/)
       .map((at) => parseInt(at));
+    const timeQuantumInt = parseInt(timeQuantum);
+
     if (burstTimeArr.includes(0)) {
-      alert('0 burst time is invalid');
+      alert('Invalid input: 0 burst time is invalid');
       return;
     } else if (arrivalTimeArr.length !== burstTimeArr.length) {
-      alert('The length of the arrival times and burst times does not match.')
+      alert(
+        'Invalid input: number of the arrival times and burst times do not match'
+      );
       return;
-    } else if (arrivalTimeArr.includes(NaN) || burstTimeArr.includes(NaN)) {
-      alert('Invalid input')
+    } else if (
+      arrivalTimeArr.includes(NaN) ||
+      burstTimeArr.includes(NaN) ||
+      (props.selectedAlgo.value === 'RR' && isNaN(timeQuantumInt))
+    ) {
+      alert('Invalid input: please enter only integers');
+      return;
+    } else if (
+      arrivalTimeArr.some((t) => t < 0) ||
+      burstTimeArr.some((t) => t < 0)
+    ) {
+      alert('Invalid input: negative numbers are invalid');
       return;
     }
     props.setArrivalTime(arrivalTimeArr);
     props.setBurstTime(burstTimeArr);
+    props.setTimeQuantum(timeQuantumInt);
   };
 
   const handleArrivalTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,6 +197,10 @@ const Input = (props: InputProps) => {
 
   const handleBurstTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setBurstTime(e.target.value);
+  };
+
+  const handleTimeQuantumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTimeQuantum(e.target.value);
   };
 
   return (
@@ -204,6 +234,19 @@ const Input = (props: InputProps) => {
             ref={burstTimeRef}
           />
         </fieldset>
+        {props.selectedAlgo.value === 'RR' && (
+          <fieldset>
+            <label htmlFor="time-quantum">Time Quantum</label>
+            <input
+              onChange={handleTimeQuantumChange}
+              type="number"
+              id="time-quantum"
+              placeholder="e.g. 3"
+              min="1"
+              step="1"
+            />
+          </fieldset>
+        )}
         <Button>Solve</Button>
       </Form>
     </StyledInput>
