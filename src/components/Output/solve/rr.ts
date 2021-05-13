@@ -16,8 +16,6 @@ export const rr = (
     .sort((obj1, obj2) => {
       if (obj1.at > obj2.at) return 1;
       if (obj1.at < obj2.at) return -1;
-      if (obj1.bt > obj2.bt) return 1;
-      if (obj1.bt < obj2.bt) return -1;
       return 0;
     });
 
@@ -44,16 +42,16 @@ export const rr = (
     }, 0) &&
     unfinishedJobs.length > 0
   ) {
-    let prevIdle = false;
     if (readyQueue.length === 0 && unfinishedJobs.length > 0) {
-      prevIdle = true;
+      // Previously idle
       readyQueue.push(unfinishedJobs[0]);
+      currentTime = readyQueue[0].at;
     }
 
     const processToExecute = readyQueue[0];
 
-    // -> -> -> -> -> -> -> ->
     if (remainingTime[processToExecute.job] <= timeQuantum) {
+      // Burst time less than or equal to time quantum, execute until finished
       const remainingT = remainingTime[processToExecute.job];
       remainingTime[processToExecute.job] -= remainingT;
       const prevCurrentTime = currentTime;
@@ -90,6 +88,7 @@ export const rr = (
     // Requeueing (move head/first item to tail/last)
     readyQueue.push(readyQueue.shift());
 
+    // When the process finished executing
     if (remainingTime[processToExecute.job] === 0) {
       const indexToRemoveUJ = unfinishedJobs.indexOf(processToExecute);
       if (indexToRemoveUJ > -1) {
@@ -109,7 +108,7 @@ export const rr = (
     }
   }
 
-  // Sort the processes by job name within arrival time
+  // Sort the processes arrival time and then by job name
   solvedProcessesInfo.sort((obj1, obj2) => {
     if (obj1.at > obj2.at) return 1;
     if (obj1.at < obj2.at) return -1;
