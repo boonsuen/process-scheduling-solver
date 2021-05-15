@@ -80,6 +80,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const sizes = {
+  '1275': 1275,
   '1150': 1150,
   '1050': 1050,
   '600': 600

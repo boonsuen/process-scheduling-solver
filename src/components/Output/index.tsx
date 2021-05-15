@@ -14,6 +14,8 @@ const StyledOutput = styled.div`
     0px 2px 32px rgba(15, 91, 206, 0.1);
   border-radius: 15px;
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
   align-self: baseline;
   ${media['1050']`align-self: normal;`}
 `;

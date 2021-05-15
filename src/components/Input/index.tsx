@@ -17,9 +17,11 @@ const StyledInput = styled.div`
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.1),
     0px 2px 32px rgba(15, 91, 206, 0.1);
   border-radius: 15px;
-  align-self: baseline;
-  ${media['1050']`align-self: normal;`}
+  align-self: flex-start;
+  ${media['1050']`align-self: normal;max-width: 100%;width: 100%;`}
   min-width: 230px;
+  max-width: 335px;
+  width: 26.5vw;
 `;
 
 const Form = styled.form`

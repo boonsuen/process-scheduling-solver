@@ -28,7 +28,7 @@ const StyledTable = styled.table`
   border-collapse: collapse;
   border-radius: 10px;
   box-sizing: border-box;
-  ${media['1150']`font-size: 14px;`}
+  ${media['1275']`font-size: 14px;`}
 
   tr {
     height: 40px;
@@ -40,7 +40,7 @@ const StyledTable = styled.table`
   td {
     text-align: left;
     padding: 15px;
-    ${media['1150']`padding: 12px`};
+    ${media['1275']`padding: 12px`};
     ${media['600']`padding: 8px`};
     border: 1px solid #e1e1e1;
     line-height: 16.1px;
@@ -49,7 +49,7 @@ const StyledTable = styled.table`
 
 const HeaderCell = styled.th`
   font-size: 1rem;
-  ${media['1150']`font-size: 14px;`}
+  ${media['1275']`font-size: 14px;`}
   font-weight: 500;
   height: 40px;
   ${media['600']`height: 35px`};
