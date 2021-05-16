@@ -115,9 +115,7 @@ const GanttChart = ({ ganttChartInfo }: GanttChartProps) => {
 
   const timeContainerWidth = time.length * itemWidth - (time.length - 1);
 
-  let overflowWidth = timeContainerWidth - containerWidth;
-  let overflowTimeItems = ~~(overflowWidth / itemWidth) + 1;
-  let maxTimeItemCount = time.length - overflowTimeItems;
+  let maxTimeItemCount = ~~(containerWidth / itemWidth);
 
   let numberOfLines = 0;
   let acc = 0;
@@ -129,7 +127,15 @@ const GanttChart = ({ ganttChartInfo }: GanttChartProps) => {
       break;
     }
   }
-  let lastLineItemCount = time.length - acc;
+  
+  // If index of last time item equal to acc
+  let lastLineItemCount: number;
+  if (time.length - 1 === acc) {
+    lastLineItemCount = 0;
+    numberOfLines--;
+  } else {
+    lastLineItemCount = time.length - acc;
+  }
 
   let timeCounter = 0;
   let jobCounter = 0;
@@ -139,11 +145,10 @@ const GanttChart = ({ ganttChartInfo }: GanttChartProps) => {
       <Title>Gantt Chart</Title>
       {containerWidth !== null && containerWidth <= timeContainerWidth && (
         <>
-          <h1>wtf</h1>
           {Array.from({ length: numberOfLines }).map((_, ind) => {
-            if (ind === numberOfLines - 1) {
+            if (ind === numberOfLines - 1 && lastLineItemCount !== 0) {
               return (
-                <MultilineContainer key={`multiline-container-${ind}`}>
+                <MultilineContainer key={`haha-multiline-container-${ind}`}>
                   <JobContainer>
                     {Array.from({
                       length: lastLineItemCount - 1,
