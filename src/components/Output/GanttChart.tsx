@@ -120,6 +120,9 @@ const GanttChart = ({ ganttChartInfo }: GanttChartProps) => {
   let numberOfLines = 0;
   let acc = 0;
   while (true) {
+    if (containerWidth === null) {
+      break;
+    }
     acc += maxTimeItemCount - 1;
     numberOfLines++;
     if (acc > time.length) {
@@ -148,7 +151,7 @@ const GanttChart = ({ ganttChartInfo }: GanttChartProps) => {
           {Array.from({ length: numberOfLines }).map((_, ind) => {
             if (ind === numberOfLines - 1 && lastLineItemCount !== 0) {
               return (
-                <MultilineContainer key={`haha-multiline-container-${ind}`}>
+                <MultilineContainer key={`multiline-container-${ind}`}>
                   <JobContainer>
                     {Array.from({
                       length: lastLineItemCount - 1,
