@@ -125,7 +125,7 @@ const GanttChart = ({ ganttChartInfo }: GanttChartProps) => {
     }
     acc += maxTimeItemCount - 1;
     numberOfLines++;
-    if (acc > time.length) {
+    if (acc >= time.length) {
       acc -= maxTimeItemCount - 1;
       break;
     }
