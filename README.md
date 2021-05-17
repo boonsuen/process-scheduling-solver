@@ -8,3 +8,7 @@
 - Shortest Job First / SJF (non-preemptive)
 - Shortest Remaining Time First / SRTF (preemptive)
 - Round-Robin / RR
+## Built with
+- Next.js
+- TypeScript
+- styled-components
