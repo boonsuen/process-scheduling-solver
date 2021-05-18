@@ -94,7 +94,7 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
         readyQueue.push(p);
       }
 
-      if (p.bt < processToExecute.bt - amount) {
+      if (p.bt < remainingTime[processToExecute.job] - amount) {
         remainingTime[processToExecute.job] -= amount;
         readyQueue.push(p);
         const prevCurrentTime = currentTime;
