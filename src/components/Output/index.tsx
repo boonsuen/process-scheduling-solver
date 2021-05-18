@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import GanttChart from './GanttChart';
 import Table from './Table';
 import { solve } from './solve';
-import { AlgoType } from '../Input/AlgoSelect';
+import { OptionType } from '../Input/AlgoSelect';
 
 import { media } from '../GlobalStyle.css';
 
@@ -28,14 +28,50 @@ const Text = styled.p`
   `}
 `;
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`;
+
+const FadeIn = ({ duration = 600, delay = 0, children, ...delegated }) => {
+  return (
+    <Wrapper
+      {...delegated}
+      style={{
+        ...(delegated.style || {}),
+        animationDuration: duration + 'ms',
+        animationDelay: delay + 'ms',
+      }}
+    >
+      {children}
+    </Wrapper>
+  );
+};
+
+const Wrapper = styled.div`
+  @media (prefers-reduced-motion: no-preference) {
+    animation-name: ${fadeIn};
+    animation-fill-mode: backwards;
+  }
+`;
+
 type OutputProps = {
-  algo: AlgoType;
+  selectedAlgo: OptionType;
   arrivalTime: number[];
   burstTime: number[];
   timeQuantum: number;
 };
 
-const Output = ({ algo, arrivalTime, burstTime, timeQuantum }: OutputProps) => {
+const Output = ({
+  selectedAlgo,
+  arrivalTime,
+  burstTime,
+  timeQuantum,
+}: OutputProps) => {
   if (!arrivalTime.length || !burstTime.length) {
     return (
       <StyledOutput>
@@ -45,7 +81,7 @@ const Output = ({ algo, arrivalTime, burstTime, timeQuantum }: OutputProps) => {
     );
   } else {
     const { solvedProcessesInfo, ganttChartInfo } = solve(
-      algo,
+      selectedAlgo.value,
       arrivalTime,
       burstTime,
       timeQuantum
@@ -53,8 +89,13 @@ const Output = ({ algo, arrivalTime, burstTime, timeQuantum }: OutputProps) => {
     return (
       <StyledOutput>
         <h1>Output</h1>
-        <GanttChart {...{ ganttChartInfo }} />
-        <Table {...{ solvedProcessesInfo }} />
+        <p>Solution for {selectedAlgo.label}</p>
+        {
+          <FadeIn>
+            <GanttChart {...{ ganttChartInfo }} />
+            <Table {...{ solvedProcessesInfo }} />
+          </FadeIn>
+        }
       </StyledOutput>
     );
   }

@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Input from '../components/Input';
 import Output from '../components/Output';
-import { defaultOption } from '../components/Input/AlgoSelect';
 
 import { media } from '../components/GlobalStyle.css';
 
@@ -41,7 +40,7 @@ const Footer = styled.footer`
 
 
 export default function Home() {
-  const [selectedAlgo, setSelectedAlgo] = useState(defaultOption);
+  const [selectedAlgo, setSelectedAlgo] = useState(null);
   const [arrivalTime, setArrivalTime] = useState<number[]>([]);
   const [burstTime, setBurstTime] = useState<number[]>([]);
   const [timeQuantum, setTimeQuantum] = useState<number>();
@@ -65,7 +64,7 @@ export default function Home() {
           setTimeQuantum={setTimeQuantum}
         />
         <Output
-          algo={selectedAlgo.value}
+          selectedAlgo={selectedAlgo}
           arrivalTime={arrivalTime}
           burstTime={burstTime}
           timeQuantum={timeQuantum}

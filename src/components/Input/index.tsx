@@ -6,7 +6,7 @@ import React, {
   useRef,
 } from 'react';
 import styled from 'styled-components';
-import AlgoSelect, { AlgoType } from './AlgoSelect';
+import AlgoSelect, { OptionType, defaultOption } from './AlgoSelect';
 
 import { media } from '../GlobalStyle.css';
 
@@ -129,10 +129,7 @@ const Button = ({ children }) => {
 };
 
 type InputProps = {
-  selectedAlgo: {
-    value: AlgoType;
-    label: string;
-  };
+  selectedAlgo: OptionType;
   setSelectedAlgo: Dispatch<SetStateAction<{}>>;
   setArrivalTime: Dispatch<SetStateAction<number[]>>;
   setBurstTime: Dispatch<SetStateAction<number[]>>;
@@ -140,6 +137,7 @@ type InputProps = {
 };
 
 const Input = (props: InputProps) => {
+  const [selectedAlgo, setSelectedAlgo] = useState(defaultOption);
   const [arrivalTime, setArrivalTime] = useState('');
   const [burstTime, setBurstTime] = useState('');
   const [timeQuantum, setTimeQuantum] = useState('');
@@ -177,7 +175,7 @@ const Input = (props: InputProps) => {
     } else if (
       arrivalTimeArr.includes(NaN) ||
       burstTimeArr.includes(NaN) ||
-      (props.selectedAlgo.value === 'RR' && isNaN(timeQuantumInt))
+      (selectedAlgo.value === 'RR' && isNaN(timeQuantumInt))
     ) {
       alert('Invalid input: please enter only integers');
       return;
@@ -188,6 +186,7 @@ const Input = (props: InputProps) => {
       alert('Invalid input: negative numbers are invalid');
       return;
     }
+    props.setSelectedAlgo(selectedAlgo);
     props.setArrivalTime(arrivalTimeArr);
     props.setBurstTime(burstTimeArr);
     props.setTimeQuantum(timeQuantumInt);
@@ -212,8 +211,8 @@ const Input = (props: InputProps) => {
         <fieldset>
           <label htmlFor="react-select-algo">Algorithm</label>
           <AlgoSelect
-            selectedAlgo={props.selectedAlgo}
-            setSelectedAlgo={props.setSelectedAlgo}
+            selectedAlgo={selectedAlgo}
+            setSelectedAlgo={setSelectedAlgo}
           />
         </fieldset>
         <fieldset>
@@ -236,10 +235,11 @@ const Input = (props: InputProps) => {
             ref={burstTimeRef}
           />
         </fieldset>
-        {props.selectedAlgo.value === 'RR' && (
+        {selectedAlgo.value === 'RR' && (
           <fieldset>
             <label htmlFor="time-quantum">Time Quantum</label>
             <input
+              defaultValue={timeQuantum}
               onChange={handleTimeQuantumChange}
               type="number"
               id="time-quantum"
