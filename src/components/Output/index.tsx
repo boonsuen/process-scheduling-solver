@@ -64,6 +64,7 @@ type OutputProps = {
   arrivalTime: number[];
   burstTime: number[];
   timeQuantum: number;
+  priorities: number[];
 };
 
 const Output = ({
@@ -71,6 +72,7 @@ const Output = ({
   arrivalTime,
   burstTime,
   timeQuantum,
+  priorities
 }: OutputProps) => {
   if (!arrivalTime.length || !burstTime.length) {
     return (
@@ -84,7 +86,8 @@ const Output = ({
       selectedAlgo.value,
       arrivalTime,
       burstTime,
-      timeQuantum
+      timeQuantum,
+      priorities
     );
     return (
       <StyledOutput>

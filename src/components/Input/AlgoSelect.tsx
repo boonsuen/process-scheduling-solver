@@ -8,7 +8,7 @@ import styled from 'styled-components';
 // RR - Round-Robin
 // NPP - Non-preemptive Priority
 // PP - Preemptive Priority
-type AlgoType = 'FCFS' | 'SJF' | 'SRTF' | 'RR' | 'NPP';
+export type AlgoType = 'FCFS' | 'SJF' | 'SRTF' | 'RR' | 'NPP';
 export type OptionType = {
   value: AlgoType;
   label: string;
@@ -33,6 +33,10 @@ const options: OptionType[] = [
     value: 'RR',
     label: 'Round-Robin, RR',
   },  
+  {
+    value: 'NPP',
+    label: 'Priority (non-preemptive)',
+  },
 ];
 
 type AlgoSelectProps = {

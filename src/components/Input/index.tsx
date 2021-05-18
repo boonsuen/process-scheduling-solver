@@ -7,6 +7,7 @@ import React, {
 } from 'react';
 import styled from 'styled-components';
 import AlgoSelect, { OptionType, defaultOption } from './AlgoSelect';
+import Button from './Button';
 
 import { media } from '../GlobalStyle.css';
 
@@ -99,41 +100,13 @@ const Form = styled.form`
   }
 `;
 
-const Button = ({ children }) => {
-  const createRipple = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const button = event.currentTarget;
-
-    const circle = document.createElement('span');
-    const diameter = Math.max(button.clientWidth, button.clientHeight);
-    const radius = diameter / 2;
-
-    circle.style.width = circle.style.height = `${diameter}px`;
-    circle.style.left = `${event.pageX - button.offsetLeft - radius}px`;
-    circle.style.top = `${event.pageY - button.offsetTop - radius}px`;
-    circle.classList.add('ripple');
-
-    const ripple = button.getElementsByClassName('ripple')[0];
-
-    if (ripple) {
-      ripple.remove();
-    }
-
-    button.appendChild(circle);
-  };
-
-  return (
-    <button onClick={createRipple} type="submit">
-      {children}
-    </button>
-  );
-};
-
 type InputProps = {
   selectedAlgo: OptionType;
   setSelectedAlgo: Dispatch<SetStateAction<{}>>;
   setArrivalTime: Dispatch<SetStateAction<number[]>>;
   setBurstTime: Dispatch<SetStateAction<number[]>>;
   setTimeQuantum: Dispatch<SetStateAction<number>>;
+  setPriorities: Dispatch<SetStateAction<number[]>>;
 };
 
 const Input = (props: InputProps) => {
@@ -141,6 +114,7 @@ const Input = (props: InputProps) => {
   const [arrivalTime, setArrivalTime] = useState('');
   const [burstTime, setBurstTime] = useState('');
   const [timeQuantum, setTimeQuantum] = useState('');
+  const [priorities, setPriorities] = useState('');
   const arrivalTimeRef = useRef(null);
   const burstTimeRef = useRef(null);
 
@@ -161,8 +135,12 @@ const Input = (props: InputProps) => {
     const burstTimeArr = burstTime
       .trim()
       .split(/\s+/)
-      .map((at) => parseInt(at));
+      .map((bt) => parseInt(bt));
     const timeQuantumInt = parseInt(timeQuantum);
+    const prioritiesArr = priorities
+      .trim()
+      .split(/\s+/)
+      .map((priority) => parseInt(priority));
 
     if (burstTimeArr.includes(0)) {
       alert('Invalid input: 0 burst time is invalid');
@@ -190,6 +168,7 @@ const Input = (props: InputProps) => {
     props.setArrivalTime(arrivalTimeArr);
     props.setBurstTime(burstTimeArr);
     props.setTimeQuantum(timeQuantumInt);
+    props.setPriorities(prioritiesArr);
   };
 
   const handleArrivalTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -204,6 +183,10 @@ const Input = (props: InputProps) => {
     setTimeQuantum(e.target.value);
   };
 
+  const handlePrioritiesChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPriorities(e.target.value);
+  };
+
   return (
     <StyledInput>
       <h1>Input</h1>
@@ -216,7 +199,7 @@ const Input = (props: InputProps) => {
           />
         </fieldset>
         <fieldset>
-          <label htmlFor="arrival-time">Arrival Time</label>
+          <label htmlFor="arrival-time">Arrival Times</label>
           <input
             onChange={handleArrivalTimeChange}
             type="text"
@@ -226,7 +209,7 @@ const Input = (props: InputProps) => {
           />
         </fieldset>
         <fieldset>
-          <label htmlFor="burst-time">Burst Time</label>
+          <label htmlFor="burst-time">Burst Times</label>
           <input
             onChange={handleBurstTimeChange}
             type="text"
@@ -246,6 +229,18 @@ const Input = (props: InputProps) => {
               placeholder="e.g. 3"
               min="1"
               step="1"
+            />
+          </fieldset>
+        )}
+        {selectedAlgo.value === 'NPP' && (
+          <fieldset>
+            <label htmlFor="priorities">Priorities</label>
+            <input
+              defaultValue={priorities}
+              onChange={handlePrioritiesChange}
+              type="text"
+              id="priorities"
+              placeholder="Lower # = higher priority"
             />
           </fieldset>
         )}
