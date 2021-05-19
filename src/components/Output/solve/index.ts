@@ -3,6 +3,7 @@ import { sjf } from './sjf';
 import { srtf } from './srtf';
 import { rr } from './rr';
 import { npp } from './npp';
+import { pp } from './pp';
 import { AlgoType } from '../../Input/AlgoSelect';
 
 export type ganttChartInfoType = {
@@ -29,6 +30,8 @@ export const solve = (
       return rr(arrivalTime, burstTime, timeQuantum);
     case 'NPP':
       return npp(arrivalTime, burstTime, priorities);
+    case 'PP':
+      return pp(arrivalTime, burstTime, priorities);
     default:
       break;
   }

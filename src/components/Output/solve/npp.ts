@@ -1,13 +1,17 @@
 import { ganttChartInfoType } from './';
 
-export const npp = (arrivalTime: number[], burstTime: number[], priorities: number[]) => {
+export const npp = (
+  arrivalTime: number[],
+  burstTime: number[],
+  priorities: number[]
+) => {
   const processesInfo = arrivalTime
     .map((item, index) => {
       return {
         job: (index + 10).toString(36).toUpperCase(),
         at: item,
         bt: burstTime[index],
-        priority: priorities[index]
+        priority: priorities[index],
       };
     })
     .sort((process1, process2) => {
@@ -125,7 +129,6 @@ export const npp = (arrivalTime: number[], burstTime: number[], priorities: numb
       }
 
       finishedJobs.push(processToExecute);
-
     }
   }
 

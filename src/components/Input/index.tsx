@@ -137,7 +137,7 @@ const Input = (props: InputProps) => {
       .split(/\s+/)
       .map((bt) => parseInt(bt));
     const timeQuantumInt = parseInt(timeQuantum);
-    const prioritiesArr = priorities
+    let prioritiesArr = priorities
       .trim()
       .split(/\s+/)
       .map((priority) => parseInt(priority));
@@ -164,6 +164,19 @@ const Input = (props: InputProps) => {
       alert('Invalid input: negative numbers are invalid');
       return;
     }
+
+    if (selectedAlgo.value === 'NPP' || selectedAlgo.value === 'PP') {
+      if (priorities.trim() === '') {
+        prioritiesArr = arrivalTimeArr.map(() => 0);
+      } else if (
+        prioritiesArr.length !== arrivalTimeArr.length ||
+        prioritiesArr.length !== arrivalTimeArr.length
+      ) {
+        alert('Invalid input: arrival times, burst times and priorities should have equal length ');
+        return;
+      }
+    }
+
     props.setSelectedAlgo(selectedAlgo);
     props.setArrivalTime(arrivalTimeArr);
     props.setBurstTime(burstTimeArr);
@@ -232,7 +245,7 @@ const Input = (props: InputProps) => {
             />
           </fieldset>
         )}
-        {selectedAlgo.value === 'NPP' && (
+        {(selectedAlgo.value === 'NPP' || selectedAlgo.value === 'PP') && (
           <fieldset>
             <label htmlFor="priorities">Priorities</label>
             <input
