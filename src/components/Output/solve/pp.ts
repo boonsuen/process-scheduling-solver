@@ -103,7 +103,7 @@ export const pp = (
         return true;
       }
     });
-    const processToArriveInThisCycle = processesInfo.filter((p) => {
+    const processToArrive= processesInfo.filter((p) => {
       return (
         p.at <= currentTime &&
         p !== processToExecute &&
@@ -113,7 +113,7 @@ export const pp = (
     });
 
     // Push new processes to readyQueue
-    readyQueue.push(...processToArriveInThisCycle);
+    readyQueue.push(...processToArrive);
 
     if (!gotInterruption) {
       if (prevIdle) {

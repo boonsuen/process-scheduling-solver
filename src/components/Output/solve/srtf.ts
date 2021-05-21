@@ -45,29 +45,14 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
       readyQueue.push(unfinishedJobs[0]);
     }
 
-    const jobToExecuteNext = Object.entries(remainingTime)
-      .map((el, i) => {
-        return {
-          job: el[0],
-          at: processesInfo[i].at,
-          remainingTime: el[1],
-        };
-      })
-      .filter(
-        (p) =>
-          p.remainingTime !== 0 &&
-          readyQueue.find((process) => process.job === p.job) &&
-          unfinishedJobs.find((process) => process.job === p.job)
-      )
-      .sort((a, b) => {
-        if (a.remainingTime > b.remainingTime) return 1;
-        if (a.remainingTime < b.remainingTime) return -1;
-        if (a.at > b.at) return 1;
-        if (a.at < b.at) return -1;
-        return 0;
-      })[0].job;
+    readyQueue.sort((a, b) => {
+      // Equal-priority processes are scheduled in FCFS order.
+      if (remainingTime[a.job] > remainingTime[b.job]) return 1;
+      if (remainingTime[a.job] < remainingTime[b.job]) return -1;
+      return 0;
+    });
 
-    const processToExecute = readyQueue.find(p => p.job === jobToExecuteNext);
+    const processToExecute = readyQueue[0];
 
     const processATLessThanBT = processesInfo.filter((p) => {
       let curr: number = currentTime;
@@ -82,6 +67,7 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
         unfinishedJobs.includes(p)
       );
     });
+
     let gotInterruption = false;
     processATLessThanBT.some((p) => {
       if (prevIdle) {
@@ -109,6 +95,17 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
         return true;
       }
     });
+    const processToArrive= processesInfo.filter((p) => {
+      return (
+        p.at <= currentTime &&
+        p !== processToExecute &&
+        !readyQueue.includes(p) &&
+        unfinishedJobs.includes(p)
+      );
+    });
+
+    // Push new processes to readyQueue
+    readyQueue.push(...processToArrive);
 
     if (!gotInterruption) {
       if (prevIdle) {
@@ -146,6 +143,11 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
         });
       }      
     }
+
+    // Requeueing (move head/first item to tail/last)
+    readyQueue.push(readyQueue.shift());
+    
+    // When the process finished executing
     if (remainingTime[processToExecute.job] === 0) {
       const indexToRemoveUJ = unfinishedJobs.indexOf(processToExecute);
       if (indexToRemoveUJ > -1) {
