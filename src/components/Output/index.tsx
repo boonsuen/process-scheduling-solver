@@ -20,9 +20,25 @@ const StyledOutput = styled.div`
   ${media['1050']`align-self: normal;`}
 `;
 
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const Text = styled.p`
   margin: 0;
   padding: 0;
+  ${media['600']`
+    font-size: 14px;
+  `}
+`;
+
+const AlgoValue = styled.span`
+  background-color: #e8fff7;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 8px 10px;
   ${media['600']`
     font-size: 14px;
   `}
@@ -72,12 +88,14 @@ const Output = ({
   arrivalTime,
   burstTime,
   timeQuantum,
-  priorities
+  priorities,
 }: OutputProps) => {
   if (!arrivalTime.length || !burstTime.length) {
     return (
       <StyledOutput>
-        <h1>Output</h1>
+        <Header>
+          <h1>Output</h1>
+        </Header>
         <Text>Gantt chart and table will be shown here</Text>
       </StyledOutput>
     );
@@ -91,8 +109,12 @@ const Output = ({
     );
     return (
       <StyledOutput>
-        <h1>Output</h1>
-        <p>Solution for {selectedAlgo.label}</p>
+        <Header>
+          <h1>Output</h1>
+          <AlgoValue title={`Currently selected: ${selectedAlgo.label}`}>
+            {selectedAlgo.value}
+          </AlgoValue>
+        </Header>
         {
           <FadeIn>
             <GanttChart {...{ ganttChartInfo }} />
