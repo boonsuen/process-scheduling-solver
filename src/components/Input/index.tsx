@@ -6,6 +6,7 @@ import React, {
   useRef,
 } from 'react';
 import styled from 'styled-components';
+import swal from 'sweetalert';
 import AlgoSelect, { OptionType, defaultOption } from './AlgoSelect';
 import Button from './Button';
 
@@ -143,25 +144,39 @@ const Input = (props: InputProps) => {
       .map((priority) => parseInt(priority));
 
     if (burstTimeArr.includes(0)) {
-      alert('Invalid input: 0 burst time is invalid');
+      swal({
+        title: 'Invalid input', 
+        text: '0 burst time is invalid', 
+        icon: 'error'
+      });
       return;
     } else if (arrivalTimeArr.length !== burstTimeArr.length) {
-      alert(
-        'Invalid input: number of the arrival times and burst times do not match'
-      );
+      swal({
+        title: 'Invalid input', 
+        text: 'Number of the arrival times and burst times do not match', 
+        icon: 'error'
+      });
       return;
     } else if (
       arrivalTimeArr.includes(NaN) ||
       burstTimeArr.includes(NaN) ||
       (selectedAlgo.value === 'RR' && isNaN(timeQuantumInt))
     ) {
-      alert('Invalid input: please enter only integers');
+      swal({
+        title: 'Invalid input', 
+        text: 'Please enter only integers', 
+        icon: 'error'
+      });
       return;
     } else if (
       arrivalTimeArr.some((t) => t < 0) ||
       burstTimeArr.some((t) => t < 0)
     ) {
-      alert('Invalid input: negative numbers are invalid');
+      swal({
+        title: 'Invalid input', 
+        text: 'Negative numbers are invalid', 
+        icon: 'error'
+      });
       return;
     }
 
@@ -172,7 +187,11 @@ const Input = (props: InputProps) => {
         prioritiesArr.length !== arrivalTimeArr.length ||
         prioritiesArr.length !== arrivalTimeArr.length
       ) {
-        alert('Invalid input: arrival times, burst times and priorities should have equal length ');
+        swal({
+          title: 'Invalid input', 
+          text: 'Arrival times, burst times and priorities should have equal length', 
+          icon: 'error'
+        });
         return;
       }
     }
