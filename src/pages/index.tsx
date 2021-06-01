@@ -69,8 +69,31 @@ export default function Home() {
         <title>Process Scheduling Solver</title>
         <meta
           name="description"
-          content="Generate gantt chart and calculate TAT (turnaround time) and WAT (waiting time) based on the algorithms."
+          content="Dynamically generates gantt chart and calculates TAT (turnaround time) and WAT (waiting time) based on various CPU scheduling algorithms."
         />
+        <meta property="og:title" content="Process Scheduling Solver" />
+        <meta
+          property="og:description"
+          content="Dynamically generates gantt chart and calculates TAT (turnaround time) and WAT (waiting time) based on various CPU scheduling algorithms."
+        />
+        <meta
+          property="og:image"
+          content="https://boonsuen.com/process-scheduling-solver/meta.png"
+        />
+        <meta
+          property="og:url"
+          content="https://boonsuen.com/process-scheduling-solver"
+        />
+        <meta name="twitter:title" content="Process Scheduling Solver" />
+        <meta
+          name="twitter:description"
+          content="Dynamically generates gantt chart and calculates TAT (turnaround time) and WAT (waiting time) based on various CPU scheduling algorithms."
+        />
+        <meta
+          name="twitter:image"
+          content="https://boonsuen.com/process-scheduling-solver/meta.png"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
       </Head>
 
       <Main className="container">
