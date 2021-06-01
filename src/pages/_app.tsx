@@ -11,6 +11,7 @@ export default function App({ Component, pageProps }) {
         <style dangerouslySetInnerHTML={{ 
           __html: fontFaceRules 
         }}></style>
+        <script async src="https://cdn.splitbee.io/sb.js"></script>
       </Head>
       <GlobalStyle />
       <Component {...pageProps} />
