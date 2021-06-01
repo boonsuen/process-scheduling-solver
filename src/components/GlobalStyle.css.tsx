@@ -62,6 +62,31 @@ const GlobalStyle = createGlobalStyle`
     justify-content: center;
     align-items: center;
   }
+
+  .swal-icon--error {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+
+    &__line {
+      width: 27px;
+      height: 4px;
+      top: 29px;
+    }
+  }
+
+  .swal-title {
+    color: #333;
+  }
+
+  .swal-button {
+    background-color: #26a5ff;
+    transition: background-color 0.3s;
+
+    &:not([disabled]):active, &:not([disabled]):hover {
+      background-color: #0090ff;
+    }
+  }
   
   @media (max-width: 1150px) {
     h1 {

@@ -6,9 +6,9 @@ import React, {
   useRef,
 } from 'react';
 import styled from 'styled-components';
-import swal from 'sweetalert';
 import AlgoSelect, { OptionType, defaultOption } from './AlgoSelect';
 import Button from './Button';
+import { invalidInputSwal } from './swal';
 
 import { media } from '../GlobalStyle.css';
 
@@ -144,39 +144,25 @@ const Input = (props: InputProps) => {
       .map((priority) => parseInt(priority));
 
     if (burstTimeArr.includes(0)) {
-      swal({
-        title: 'Invalid input', 
-        text: '0 burst time is invalid', 
-        icon: 'error'
-      });
+      invalidInputSwal('0 burst time is invalid');
       return;
     } else if (arrivalTimeArr.length !== burstTimeArr.length) {
-      swal({
-        title: 'Invalid input', 
-        text: 'Number of the arrival times and burst times do not match', 
-        icon: 'error'
-      });
+      invalidInputSwal(
+        'Number of the arrival times and burst times do not match'
+      );
       return;
     } else if (
       arrivalTimeArr.includes(NaN) ||
       burstTimeArr.includes(NaN) ||
       (selectedAlgo.value === 'RR' && isNaN(timeQuantumInt))
     ) {
-      swal({
-        title: 'Invalid input', 
-        text: 'Please enter only integers', 
-        icon: 'error'
-      });
+      invalidInputSwal('Please enter only integers');
       return;
     } else if (
       arrivalTimeArr.some((t) => t < 0) ||
       burstTimeArr.some((t) => t < 0)
     ) {
-      swal({
-        title: 'Invalid input', 
-        text: 'Negative numbers are invalid', 
-        icon: 'error'
-      });
+      invalidInputSwal('Negative numbers are invalid');
       return;
     }
 
@@ -187,11 +173,9 @@ const Input = (props: InputProps) => {
         prioritiesArr.length !== arrivalTimeArr.length ||
         prioritiesArr.length !== arrivalTimeArr.length
       ) {
-        swal({
-          title: 'Invalid input', 
-          text: 'Arrival times, burst times and priorities should have equal length', 
-          icon: 'error'
-        });
+        invalidInputSwal(
+          'Arrival times, burst times and priorities should have equal length'
+        );
         return;
       }
     }
