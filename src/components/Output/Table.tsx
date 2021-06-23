@@ -24,7 +24,6 @@ const TableWrapper = styled.div`
 
 const StyledTable = styled.table`
   width: 100%;
-  max-width: 1000px;  
   border-collapse: collapse;
   border-radius: 10px;
   box-sizing: border-box;
