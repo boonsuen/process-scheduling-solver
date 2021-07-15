@@ -16,10 +16,10 @@
     "sweetalert": "^2.1.2"
   },
   "devDependencies": {
-    "@types/react": "^17.0.13",
-    "@types/react-select": "^4.0.16",
+    "@types/react": "^17.0.14",
+    "@types/react-select": "^4.0.17",
     "@types/styled-components": "^5.1.11",
-    "babel-plugin-styled-components": "^1.13.1",
+    "babel-plugin-styled-components": "^1.13.2",
     "file-loader": "^6.2.0",
     "typescript": "^4.3.5",
     "url-loader": "^4.1.1"
