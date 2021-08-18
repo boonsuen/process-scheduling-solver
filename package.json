@@ -16,9 +16,9 @@
     "sweetalert": "^2.1.2"
   },
   "devDependencies": {
-    "@types/react": "^17.0.14",
+    "@types/react": "^17.0.18",
     "@types/react-select": "^4.0.17",
-    "@types/styled-components": "^5.1.11",
+    "@types/styled-components": "^5.1.12",
     "babel-plugin-styled-components": "^1.13.2",
     "file-loader": "^6.2.0",
     "typescript": "^4.3.5",
