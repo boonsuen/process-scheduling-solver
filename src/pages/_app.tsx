@@ -12,6 +12,13 @@ export default function App({ Component, pageProps }) {
           __html: fontFaceRules 
         }}></style>
         <script async src="https://cdn.splitbee.io/sb.js"></script>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-PR31CLCPW1"></script>
+        <script>
+          {`window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-PR31CLCPW1');`}
+        </script>
       </Head>
       <GlobalStyle />
       <Component {...pageProps} />
