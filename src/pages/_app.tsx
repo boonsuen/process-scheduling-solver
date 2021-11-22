@@ -27,6 +27,11 @@ export default function App({ Component, pageProps }) {
             gtag('config', 'G-PR31CLCPW1');`,
           }}
         />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5046662807579210"
+          crossOrigin="anonymous"
+        ></script>
       </Head>
       <GlobalStyle />
       <Component {...pageProps} />
