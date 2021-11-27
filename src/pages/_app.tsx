@@ -28,10 +28,14 @@ export default function App({ Component, pageProps }) {
           }}
         />
         <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5046662807579210"
-          crossOrigin="anonymous"
-        ></script>
+          dangerouslySetInnerHTML={{
+            __html: `
+            (function(s,u,z,p) {
+              s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);
+            })
+            (document.createElement('script'),'https://iclickcdn.com/tag.min.js',4687014,document.body||document.documentElement)`,
+          }}
+        />
       </Head>
       <GlobalStyle />
       <Component {...pageProps} />
