@@ -27,7 +27,7 @@ export default function App({ Component, pageProps }) {
             gtag('config', 'G-PR31CLCPW1');`,
           }}
         />
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `
             (function(s,u,z,p) {
@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }) {
             })
             (document.createElement('script'),'https://iclickcdn.com/tag.min.js',4687014,document.body||document.documentElement)`,
           }}
-        />
+        /> */}
       </Head>
       <GlobalStyle />
       <Component {...pageProps} />
