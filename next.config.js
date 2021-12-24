@@ -1,6 +1,9 @@
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
+  experimental: {
+    styledComponents: true
+  },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.module.rules.push(
       {
