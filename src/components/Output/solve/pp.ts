@@ -1,10 +1,10 @@
-import { ganttChartInfoType } from './';
+import { solvedProcessesInfoType, ganttChartInfoType } from './';
 
 export const pp = (
-  arrivalTime: number[], 
+  arrivalTime: number[],
   burstTime: number[],
   priorities: number[]
-  ) => {
+) => {
   const processesInfo = arrivalTime
     .map((item, index) => {
       return {
@@ -22,7 +22,7 @@ export const pp = (
       return 0;
     });
 
-  const solvedProcessesInfo = [];
+  const solvedProcessesInfo: solvedProcessesInfoType = [];
   const ganttChartInfo: ganttChartInfoType = [];
 
   const readyQueue: {
@@ -47,10 +47,7 @@ export const pp = (
     unfinishedJobs.length > 0
   ) {
     let prevIdle = false;
-    if (
-      readyQueue.length === 0 &&
-      unfinishedJobs.length > 0
-    ) {
+    if (readyQueue.length === 0 && unfinishedJobs.length > 0) {
       prevIdle = true;
       readyQueue.push(unfinishedJobs[0]);
     }
@@ -97,13 +94,13 @@ export const pp = (
         ganttChartInfo.push({
           job: processToExecute.job,
           start: prevCurrentTime,
-          stop: currentTime
+          stop: currentTime,
         });
         gotInterruption = true;
         return true;
       }
     });
-    const processToArrive= processesInfo.filter((p) => {
+    const processToArrive = processesInfo.filter((p) => {
       return (
         p.at <= currentTime &&
         p !== processToExecute &&
@@ -121,7 +118,7 @@ export const pp = (
         remainingTime[processToExecute.job] -= remainingT;
         currentTime = processToExecute.at + remainingT;
 
-        processATLessThanBT.forEach(p => {
+        processATLessThanBT.forEach((p) => {
           if (currentTime >= p.at) {
             readyQueue.push(p);
           }
@@ -130,7 +127,7 @@ export const pp = (
         ganttChartInfo.push({
           job: processToExecute.job,
           start: processToExecute.at,
-          stop: currentTime
+          stop: currentTime,
         });
       } else {
         const remainingT = remainingTime[processToExecute.job];
@@ -138,8 +135,8 @@ export const pp = (
         const prevCurrentTime = currentTime;
         currentTime += remainingT;
 
-        processATLessThanBT.forEach(p => {
-          if (currentTime >= p.at) {
+        processATLessThanBT.forEach((p) => {
+          if (currentTime >= p.at && !readyQueue.includes(p)) {
             readyQueue.push(p);
           }
         });
@@ -147,9 +144,9 @@ export const pp = (
         ganttChartInfo.push({
           job: processToExecute.job,
           start: prevCurrentTime,
-          stop: currentTime
+          stop: currentTime,
         });
-      }      
+      }
     }
 
     // Requeueing (move head/first item to tail/last)
@@ -176,11 +173,11 @@ export const pp = (
   }
 
   // Sort the processes by job name within arrival time
-  solvedProcessesInfo.sort((obj1, obj2) => {
-    if (obj1.at > obj2.at) return 1;
-    if (obj1.at < obj2.at) return -1;
-    if (obj1.job > obj2.job) return 1;
-    if (obj1.job < obj2.job) return -1;
+  solvedProcessesInfo.sort((process1, process2) => {
+    if (process1.at > process2.at) return 1;
+    if (process1.at < process2.at) return -1;
+    if (process1.job > process2.job) return 1;
+    if (process1.job < process2.job) return -1;
     return 0;
   });
 

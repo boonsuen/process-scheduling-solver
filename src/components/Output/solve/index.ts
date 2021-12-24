@@ -12,6 +12,15 @@ export type ganttChartInfoType = {
   stop: number;
 }[];
 
+export type solvedProcessesInfoType = {
+  job: string;
+  at: number;
+  bt: number;
+  ft: number;
+  tat: number;
+  wat: number;
+}[];
+
 export const solve = (
   algo: AlgoType,
   arrivalTime: number[],
