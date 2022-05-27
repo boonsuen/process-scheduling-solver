@@ -14,7 +14,7 @@ export type AlgoType = 'FCFS' | 'SJF' | 'SRTF' | 'RR' | 'NPP' | 'PP';
 export type OptionType = {
   value: AlgoType;
   label: string;
-}
+};
 
 export const defaultOption: OptionType = {
   value: 'FCFS',
@@ -34,7 +34,7 @@ const options: OptionType[] = [
   {
     value: 'RR',
     label: 'Round-Robin, RR',
-  },  
+  },
   {
     value: 'NPP',
     label: 'Priority (non-preemptive)',
@@ -63,17 +63,17 @@ export const StyledSelect = styled(Select)`
   .react-select__control--is-focused {
     background-color: #fff;
     box-shadow: 0 0 0px 1px #74b0ff;
-    border: 1px solid #2684FF;
+    border: 1px solid #2684ff;
     &:hover {
       background-color: #fff;
     }
   }
   .react-select__control--menu-is-open {
     box-shadow: 0 0 5px 1px #74b0ff;
-    border: 1px solid #2684FF;
+    border: 1px solid #2684ff;
   }
   .react-select__value-container {
-    height: 28px;
+    padding: 0 8px;
     font-size: 14px;
   }
   .react-select__option {
@@ -93,7 +93,7 @@ const AlgoSelect: React.FC<AlgoSelectProps> = ({
       instanceId="react-select-algo"
       inputId="react-select-algo"
       classNamePrefix="react-select"
-      isSearchable={false}      
+      isSearchable={false}
     />
   );
 };

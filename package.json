@@ -11,16 +11,15 @@
     "next": "^12.1.6",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-select": "^4.3.1",
+    "react-select": "^5.3.2",
     "styled-components": "^5.3.5",
     "sweetalert": "^2.1.2"
   },
   "devDependencies": {
     "@types/react": "^17.0.45",
-    "@types/react-select": "^4.0.18",
     "@types/styled-components": "^5.1.25",
     "file-loader": "^6.2.0",
-    "typescript": "^4.6.4",
+    "typescript": "^4.7.2",
     "url-loader": "^4.1.1"
   }
 }
