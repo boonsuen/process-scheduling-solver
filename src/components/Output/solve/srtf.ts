@@ -3,8 +3,13 @@ import { ganttChartInfoType } from './';
 export const srtf = (arrivalTime: number[], burstTime: number[]) => {
   const processesInfo = arrivalTime
     .map((item, index) => {
+      const job =
+        arrivalTime.length > 26
+          ? `P${index + 1}`
+          : (index + 10).toString(36).toUpperCase();
+
       return {
-        job: (index + 10).toString(36).toUpperCase(),
+        job,
         at: item,
         bt: burstTime[index],
       };
@@ -37,10 +42,7 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
     unfinishedJobs.length > 0
   ) {
     let prevIdle = false;
-    if (
-      readyQueue.length === 0 &&
-      unfinishedJobs.length > 0
-    ) {
+    if (readyQueue.length === 0 && unfinishedJobs.length > 0) {
       prevIdle = true;
       readyQueue.push(unfinishedJobs[0]);
     }
@@ -88,14 +90,14 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
         ganttChartInfo.push({
           job: processToExecute.job,
           start: prevCurrentTime,
-          stop: currentTime
+          stop: currentTime,
         });
-        
+
         gotInterruption = true;
         return true;
       }
     });
-    const processToArrive= processesInfo.filter((p) => {
+    const processToArrive = processesInfo.filter((p) => {
       return (
         p.at <= currentTime &&
         p !== processToExecute &&
@@ -113,7 +115,7 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
         remainingTime[processToExecute.job] -= remainingT;
         currentTime = processToExecute.at + remainingT;
 
-        processATLessThanBT.forEach(p => {
+        processATLessThanBT.forEach((p) => {
           if (currentTime >= p.at) {
             readyQueue.push(p);
           }
@@ -122,7 +124,7 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
         ganttChartInfo.push({
           job: processToExecute.job,
           start: processToExecute.at,
-          stop: currentTime
+          stop: currentTime,
         });
       } else {
         const remainingT = remainingTime[processToExecute.job];
@@ -130,7 +132,7 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
         const prevCurrentTime = currentTime;
         currentTime += remainingT;
 
-        processATLessThanBT.forEach(p => {
+        processATLessThanBT.forEach((p) => {
           if (currentTime >= p.at && !readyQueue.includes(p)) {
             readyQueue.push(p);
           }
@@ -139,14 +141,14 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
         ganttChartInfo.push({
           job: processToExecute.job,
           start: prevCurrentTime,
-          stop: currentTime
+          stop: currentTime,
         });
-      }      
+      }
     }
 
     // Requeueing (move head/first item to tail/last)
     readyQueue.push(readyQueue.shift());
-    
+
     // When the process finished executing
     if (remainingTime[processToExecute.job] === 0) {
       const indexToRemoveUJ = unfinishedJobs.indexOf(processToExecute);

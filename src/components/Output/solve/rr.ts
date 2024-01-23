@@ -7,8 +7,13 @@ export const rr = (
 ) => {
   const processesInfo = arrivalTime
     .map((item, index) => {
+      const job =
+        arrivalTime.length > 26
+          ? `P${index + 1}`
+          : (index + 10).toString(36).toUpperCase();
+
       return {
-        job: (index + 10).toString(36).toUpperCase(),
+        job,
         at: item,
         bt: burstTime[index],
       };
@@ -56,7 +61,7 @@ export const rr = (
       remainingTime[processToExecute.job] -= remainingT;
       const prevCurrentTime = currentTime;
       currentTime += remainingT;
-      
+
       ganttChartInfo.push({
         job: processToExecute.job,
         start: prevCurrentTime,
