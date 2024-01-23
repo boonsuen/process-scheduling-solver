@@ -1,16 +1,5 @@
 import { createGlobalStyle, css } from 'styled-components';
 
-import InterVarWoff2 from '../assets/fonts/Inter.var.woff2';
-
-export const fontFaceRules = `
-  @font-face {
-    font-family: "Inter";
-    src: url("${process.env.ASSET_PREFIX}${InterVarWoff2}") format('woff2 supports variations'),
-         url("${process.env.ASSET_PREFIX}${InterVarWoff2}") format('woff2-variations');
-    font-weight: 100 900;
-  }
-`;
-
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
@@ -108,12 +97,12 @@ const sizes = {
   '1275': 1275,
   '1150': 1150,
   '1050': 1050,
-  '600': 600
+  '600': 600,
 };
 
 export const media = Object.keys(sizes).reduce((acc, label) => {
   acc[label] = (...args: any[]) => css`
-    @media (max-width: ${sizes[label] / 16}em) {      
+    @media (max-width: ${sizes[label] / 16}em) {
       ${css.call(undefined, ...args)}
     }
   `;
