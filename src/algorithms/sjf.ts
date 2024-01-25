@@ -1,10 +1,6 @@
-import { ganttChartInfoType } from './';
+import { ganttChartInfoType } from '.';
 
-export const npp = (
-  arrivalTime: number[],
-  burstTime: number[],
-  priorities: number[]
-) => {
+export const sjf = (arrivalTime: number[], burstTime: number[]) => {
   const processesInfo = arrivalTime
     .map((item, index) => {
       const job =
@@ -16,14 +12,13 @@ export const npp = (
         job,
         at: item,
         bt: burstTime[index],
-        priority: priorities[index],
       };
     })
-    .sort((process1, process2) => {
-      if (process1.at > process2.at) return 1;
-      if (process1.at < process2.at) return -1;
-      if (process1.priority > process2.priority) return 1;
-      if (process1.priority < process2.priority) return -1;
+    .sort((obj1, obj2) => {
+      if (obj1.at > obj2.at) return 1;
+      if (obj1.at < obj2.at) return -1;
+      if (obj1.bt > obj2.bt) return 1;
+      if (obj1.bt < obj2.bt) return -1;
       return 0;
     });
 
@@ -71,23 +66,22 @@ export const npp = (
           .sort((a, b) => {
             if (a.at > b.at) return 1;
             if (a.at < b.at) return -1;
-            if (a.priority > b.priority) return 1;
-            if (a.priority < a.priority) return -1;
+            if (a.bt > b.bt) return 1;
+            if (a.bt < a.bt) return -1;
             return 0;
           });
         readyQueue.push(unfinishedJobs[0]);
       }
 
-      // Equal-priority processes are scheduled in FCFS order.
-      const rqSortedByPriority = [...readyQueue].sort((a, b) => {
-        if (a.priority > b.priority) return 1;
-        if (a.priority < b.priority) return -1;
+      const rqSortedByBT = [...readyQueue].sort((a, b) => {
+        if (a.bt > b.bt) return 1;
+        if (a.bt < b.bt) return -1;
         if (a.at > b.at) return 1;
         if (a.at < b.at) return -1;
         return 0;
       });
 
-      const processToExecute = rqSortedByPriority[0];
+      const processToExecute = rqSortedByBT[0];
 
       const previousFinishTime = finishTime[finishTime.length - 1];
 

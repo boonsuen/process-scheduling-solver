@@ -1,4 +1,4 @@
-import { ganttChartInfoType } from './';
+import { ganttChartInfoType } from '.';
 
 export const srtf = (arrivalTime: number[], burstTime: number[]) => {
   const processesInfo = arrivalTime

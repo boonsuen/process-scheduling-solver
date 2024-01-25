@@ -1,4 +1,4 @@
-import { ganttChartInfoType } from './';
+import { ganttChartInfoType } from '.';
 
 export const rr = (
   arrivalTime: number[],

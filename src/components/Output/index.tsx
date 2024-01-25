@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components';
 import GanttChart from './GanttChart';
 import Table from './Table';
-import { solve } from './solve';
+import { solve } from '../../algorithms';
 import { OptionType } from '../Input/AlgoSelect';
 
 import { media } from '../GlobalStyle.css';

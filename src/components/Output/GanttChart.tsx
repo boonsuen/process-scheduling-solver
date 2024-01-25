@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { ganttChartInfoType } from './solve';
+import { ganttChartInfoType } from '../../algorithms';
 import styled from 'styled-components';
 
 import { media } from '../GlobalStyle.css';
@@ -130,7 +130,7 @@ const GanttChart = ({ ganttChartInfo }: GanttChartProps) => {
       break;
     }
   }
-  
+
   // If index of last time item equal to acc
   let lastLineItemCount: number;
   if (time.length - 1 === acc) {

@@ -4,7 +4,7 @@ import { srtf } from './srtf';
 import { rr } from './rr';
 import { npp } from './npp';
 import { pp } from './pp';
-import { AlgoType } from '../../Input/AlgoSelect';
+import { AlgoType } from '../components/Input/AlgoSelect';
 
 export type ganttChartInfoType = {
   job: string;

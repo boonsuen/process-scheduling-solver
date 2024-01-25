@@ -1,4 +1,4 @@
-import { solvedProcessesInfoType, ganttChartInfoType } from './';
+import { solvedProcessesInfoType, ganttChartInfoType } from '.';
 
 export const pp = (
   arrivalTime: number[],
