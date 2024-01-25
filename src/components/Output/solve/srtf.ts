@@ -116,7 +116,7 @@ export const srtf = (arrivalTime: number[], burstTime: number[]) => {
         currentTime = processToExecute.at + remainingT;
 
         processATLessThanBT.forEach((p) => {
-          if (currentTime >= p.at) {
+          if (currentTime >= p.at && !readyQueue.includes(p)) {
             readyQueue.push(p);
           }
         });
