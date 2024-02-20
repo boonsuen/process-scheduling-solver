@@ -22,6 +22,7 @@ export default function App({ Component, pageProps }) {
             gtag('config', 'G-PR31CLCPW1');`,
           }}
         />
+        <meta name="monetag" content="fc2c9074d927ab873fa73c3ea0c88eea" />
         <script
           data-cfasync="false"
           dangerouslySetInnerHTML={{
