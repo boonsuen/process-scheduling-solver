@@ -23,13 +23,6 @@ export default function App({ Component, pageProps }) {
           }}
         />
       </Head>
-      <GlobalStyle />
-      <style jsx global>{`
-        html {
-          font-family: ${inter.style.fontFamily};
-        }
-      `}</style>
-      <Component {...pageProps} />
       <script
         data-cfasync="false"
         dangerouslySetInnerHTML={{
@@ -38,6 +31,13 @@ export default function App({ Component, pageProps }) {
             `,
         }}
       />
+      <GlobalStyle />
+      <style jsx global>{`
+        html {
+          font-family: ${inter.style.fontFamily};
+        }
+      `}</style>
+      <Component {...pageProps} />
     </>
   );
 }
