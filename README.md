@@ -15,8 +15,17 @@ Get it here: [process-scheduling-solver.boonsuen.com](https://process-scheduling
 - Priority (non-preemptive)
 - Priority (preemptive)
 
+## Features
+
+- Fully responsive
+- Clean & simple user interface
+- Works offline
+
 ## Built with
 
 - Next.js
 - TypeScript
 - styled-components
+
+## Upcoming
+- [ ] Support higher number for higher priority
